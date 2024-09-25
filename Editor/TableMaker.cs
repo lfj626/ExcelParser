@@ -358,7 +358,7 @@ namespace MyTurn.ExcelParser
                 if (CurTable == null)
                     continue;
 
-                for (int colCount = 2; colCount < CurTable.Columns.Count; ++colCount)
+                for (int colCount = 1; colCount < CurTable.Columns.Count; ++colCount)
                 {
                     string colName = CurTable.Columns[colCount].ColumnName.ToUpper();
                     string Lang = colName.ToUpper();
