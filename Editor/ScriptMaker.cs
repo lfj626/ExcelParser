@@ -81,7 +81,7 @@ namespace MyTurn.ExcelParser
 
             // 필드 선언
             // int 형식의 "DataVersion" 필드 선언
-            CodeMemberField versionProperty = new CodeMemberField(new CodeTypeReference(typeof(int)), "DataVersion");
+            CodeMemberField versionProperty = new CodeMemberField(new CodeTypeReference(typeof(long)), "DataVersion");
             versionProperty.Attributes = MemberAttributes.Private | MemberAttributes.Final | MemberAttributes.Static;
             GameDataClass.Members.Add(versionProperty);
 
@@ -90,7 +90,7 @@ namespace MyTurn.ExcelParser
             widthProperty.Attributes = MemberAttributes.Public | MemberAttributes.Final | MemberAttributes.Static;
             widthProperty.Name = "Version";
             widthProperty.HasGet = true;
-            widthProperty.Type = new CodeTypeReference(typeof(int));
+            widthProperty.Type = new CodeTypeReference(typeof(long));
             widthProperty.GetStatements.Add(new CodeMethodReturnStatement(
                 new CodeFieldReferenceExpression(
                     null, "DataVersion")));
@@ -103,7 +103,7 @@ namespace MyTurn.ExcelParser
 
             // 파라미터
             toLoadMethod.Parameters.Add(new CodeParameterDeclarationExpression("JArray", "ListDatas"));
-            toLoadMethod.Parameters.Add(new CodeParameterDeclarationExpression(typeof(int), "Version"));
+            toLoadMethod.Parameters.Add(new CodeParameterDeclarationExpression(typeof(long), "Version"));
 
             // 리턴 타입
             toLoadMethod.ReturnType = new CodeTypeReference("Dictionary<TableType, object>");

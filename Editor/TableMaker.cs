@@ -206,7 +206,7 @@ namespace MyTurn.ExcelParser
                     File.WriteAllTextAsync(SavePath, tableStr);
                 }
 
-                string VersionData = Convert.ToBase64String(Encoding.UTF8.GetBytes(DateTime.Now.ToString("yyyyMMddHHmmss")));
+                string VersionData = Convert.ToBase64String(Encoding.UTF8.GetBytes(DateTime.Now.ToString("yyMMddHHmmss")));
                 string VersionPath = Path.Combine(FileSavePath, "Version.bytes");
                 File.WriteAllTextAsync(VersionPath, VersionData);
 
