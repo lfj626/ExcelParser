@@ -71,7 +71,7 @@ namespace MyTurn.ExcelParser
             EditorPrefs.SetString(Application.productName, Json);
         }
 
-        private async void OnClick_AllExport()
+        private void OnClick_AllExport()
         {
             if (PathData == null)
             {
@@ -85,28 +85,30 @@ namespace MyTurn.ExcelParser
                 return;
             }
 
-            if (await TableMaker.MakeTable(PathData.TablePath, PathData.TableOutput) == false)
+            if (TableMaker.MakeTable(PathData.TablePath, PathData.TableOutput) == false)
             {
                 EditorUtility.DisplayDialog("Error", "Table Export Error", "OK");
                 return;
             }
 
-            if (await TableMaker.MakeGSTR(PathData.TablePath, PathData.GSTROutput) == false)
+            if (TableMaker.MakeGSTR(PathData.TablePath, PathData.GSTROutput) == false)
             {
                 EditorUtility.DisplayDialog("Error", "GSTR Export Error", "OK");
                 return;
             }
 
-            if (await TableMaker.MakeScript(PathData.TablePath, PathData.ScriptOutput) == false)
+            if (TableMaker.MakeScript(PathData.TablePath, PathData.ScriptOutput) == false)
             {
                 EditorUtility.DisplayDialog("Error", "Script Export Error", "OK");
                 return;
             }
 
+            AssetDatabase.Refresh();
+
             EditorUtility.DisplayDialog("Success", "Done", "OK");
         }
 
-        private async void OnClick_ScriptExport()
+        private void OnClick_ScriptExport()
         {
             if (PathData == null)
             {
@@ -120,16 +122,18 @@ namespace MyTurn.ExcelParser
                 return;
             }
 
-            if (await TableMaker.MakeScript(PathData.TablePath, PathData.ScriptOutput) == false)
+            if (TableMaker.MakeScript(PathData.TablePath, PathData.ScriptOutput) == false)
             {
                 EditorUtility.DisplayDialog("Error", "Script Export Error", "OK");
                 return;
             }
 
+            AssetDatabase.Refresh();
+
             EditorUtility.DisplayDialog("Success", "Done", "OK");
         }
 
-        private async void OnClick_TableExport()
+        private void OnClick_TableExport()
         {
             if (PathData == null)
             {
@@ -143,16 +147,18 @@ namespace MyTurn.ExcelParser
                 return;
             }
 
-            if (await TableMaker.MakeTable(PathData.TablePath, PathData.TableOutput) == false)
+            if (TableMaker.MakeTable(PathData.TablePath, PathData.TableOutput) == false)
             {
                 EditorUtility.DisplayDialog("Error", "Table Export Error", "OK");
                 return;
             }
 
+            AssetDatabase.Refresh();
+
             EditorUtility.DisplayDialog("Success", "Done", "OK");
         }
 
-        private async void OnClick_GSTRExport()
+        private void OnClick_GSTRExport()
         {
             if (PathData == null)
             {
@@ -166,11 +172,13 @@ namespace MyTurn.ExcelParser
                 return;
             }
 
-            if (await TableMaker.MakeGSTR(PathData.TablePath, PathData.GSTROutput) == false)
+            if (TableMaker.MakeGSTR(PathData.TablePath, PathData.GSTROutput) == false)
             {
                 EditorUtility.DisplayDialog("Error", "GSTR Export Error", "OK");
                 return;
             }
+
+            AssetDatabase.Refresh();
 
             EditorUtility.DisplayDialog("Success", "Done", "OK");
         }

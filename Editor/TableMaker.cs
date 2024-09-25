@@ -178,7 +178,7 @@ namespace MyTurn.ExcelParser
         #endregion
 
         #region Export
-        public static async Task<bool> MakeTable(string TablePath, string FileSavePath)
+        public static bool MakeTable(string TablePath, string FileSavePath)
         {
             try
             {
@@ -203,12 +203,12 @@ namespace MyTurn.ExcelParser
 
                     string tableStr = TableToString(Table);
                     string SavePath = Path.Combine(FileSavePath, $"{Table.TableName}.bytes");
-                    await File.WriteAllTextAsync(SavePath, tableStr);
+                    File.WriteAllTextAsync(SavePath, tableStr);
                 }
 
                 string VersionData = Convert.ToBase64String(Encoding.UTF8.GetBytes(DateTime.Now.ToString("yyyyMMddHHmmss")));
                 string VersionPath = Path.Combine(FileSavePath, "Version.bytes");
-                await File.WriteAllTextAsync(VersionPath, VersionData);
+                File.WriteAllTextAsync(VersionPath, VersionData);
 
                 return true;
             }
@@ -219,7 +219,7 @@ namespace MyTurn.ExcelParser
             }
         }
 
-        public static async Task<bool> MakeGSTR(string TablePath, string FileSavePath)
+        public static bool MakeGSTR(string TablePath, string FileSavePath)
         {
             try
             {
@@ -247,7 +247,7 @@ namespace MyTurn.ExcelParser
                     string Encrypt = Convert.ToBase64String(Encoding.UTF8.GetBytes(Data));
 
                     string FilePath = Path.Combine(FileSavePath, $"GSTR_Client_{Lan}.bytes");
-                    await File.WriteAllTextAsync(FilePath, Encrypt);
+                    File.WriteAllTextAsync(FilePath, Encrypt);
                 }
 
                 foreach (var Gstr in GSTRInfo.PatchInfo)
@@ -257,7 +257,7 @@ namespace MyTurn.ExcelParser
                     string Encrypt = Convert.ToBase64String(Encoding.UTF8.GetBytes(Data));
 
                     string FilePath = Path.Combine(FileSavePath, $"GSTR_Bundle_{Lan}.bytes");
-                    await File.WriteAllTextAsync(FilePath, Encrypt);
+                    File.WriteAllTextAsync(FilePath, Encrypt);
                 }
 
                 return true;
@@ -269,7 +269,7 @@ namespace MyTurn.ExcelParser
             }
         }
 
-        public static async Task<bool> MakeScript(string TablePath, string FileSavePath)
+        public static bool MakeScript(string TablePath, string FileSavePath)
         {
             try
             {
@@ -294,8 +294,6 @@ namespace MyTurn.ExcelParser
                 }
 
                 ScriptMaker.MakeScript(FileSavePath, dataSet);
-                await Task.Delay(100);
-
                 return true;
             }
             catch
