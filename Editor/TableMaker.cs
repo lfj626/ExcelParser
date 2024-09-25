@@ -158,14 +158,15 @@ namespace MyTurn.ExcelParser
                 {
                     if (table.Rows[i + 4][j + 1].ToString() == "@")
                         break;
+
                     try
                     {
                         NewRow[j] = table.Rows[i + 4][j + 1];
                     }
-                    catch (Exception exception)
+                    catch
                     {
-                        // TODO
-                        break;
+                        EditorUtility.DisplayDialog("Error", "Table Optimize fail", "OK");
+                        return null;
                     }
                 }
 
@@ -184,7 +185,7 @@ namespace MyTurn.ExcelParser
                 var TableInfo = LoadTableList(TablePath);
                 if (TableInfo == null)
                 {
-                    EditorUtility.DisplayDialog("Error", "Table List is empty", "");
+                    EditorUtility.DisplayDialog("Error", "Table List is empty", "OK");
                     return false;
                 }
 
@@ -196,7 +197,7 @@ namespace MyTurn.ExcelParser
                     var Table = LoadTable(TablePath, info.FileName, info.TableName);
                     if (Table == null)
                     {
-                        EditorUtility.DisplayDialog("Error", $"{info.FileName} does not have {info.TableName}", "");
+                        EditorUtility.DisplayDialog("Error", $"{info.FileName} does not have {info.TableName}", "OK");
                         return false;
                     }
 
@@ -224,14 +225,14 @@ namespace MyTurn.ExcelParser
                 var TableInfo = LoadGSTRList(TablePath);
                 if (TableInfo == null)
                 {
-                    EditorUtility.DisplayDialog("Error", "GSTR List is empty", "");
+                    EditorUtility.DisplayDialog("Error", "GSTR List is empty", "OK");
                     return false;
                 }
 
                 var GSTRInfo = GSTRToString(TablePath, TableInfo);
                 if (GSTRInfo == null)
                 {
-                    EditorUtility.DisplayDialog("Error", "GSTR Export fail", "");
+                    EditorUtility.DisplayDialog("Error", "GSTR Export fail", "OK");
                     return false;
                 }
 
@@ -273,7 +274,7 @@ namespace MyTurn.ExcelParser
                 var TableInfo = LoadTableList(TablePath);
                 if (TableInfo == null)
                 {
-                    EditorUtility.DisplayDialog("Error", "Table List is empty", "");
+                    EditorUtility.DisplayDialog("Error", "Table List is empty", "OK");
                     return false;
                 }
 
@@ -283,7 +284,7 @@ namespace MyTurn.ExcelParser
                     var Table = LoadTable(TablePath, info.FileName, info.TableName);
                     if (Table == null)
                     {
-                        EditorUtility.DisplayDialog("Error", $"{info.FileName} does not have {info.TableName}", "");
+                        EditorUtility.DisplayDialog("Error", $"{info.FileName} does not have {info.TableName}", "OK");
                         return false;
                     }
 
@@ -404,6 +405,9 @@ namespace MyTurn.ExcelParser
 
             return TempData;
         }
+        #endregion
+
+        #region Secure
         #endregion
     }
 }

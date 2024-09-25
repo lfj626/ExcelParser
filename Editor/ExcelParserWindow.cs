@@ -13,6 +13,8 @@ namespace MyTurn.ExcelParser
         public string ScriptOutput { get; set; }
         public string TableOutput { get; set; }
         public string GSTROutput { get; set; }
+        public bool IsSecure { get; set; }
+        public string SecureKey { get; set; }
     }
 
     public class ExcelInfo
@@ -68,104 +70,104 @@ namespace MyTurn.ExcelParser
         {
             if (PathData == null)
             {
-                EditorUtility.DisplayDialog("Error", "Path Invalid", "");
+                EditorUtility.DisplayDialog("Error", "Path Invalid", "OK");
                 return;
             }
 
             if (string.IsNullOrEmpty(PathData.TablePath))
             {
-                EditorUtility.DisplayDialog("Error", "Table Path is empty", "");
+                EditorUtility.DisplayDialog("Error", "Table Path is empty", "OK");
                 return;
             }
 
             if (await TableMaker.MakeTable(PathData.TablePath, PathData.TableOutput) == false)
             {
-                EditorUtility.DisplayDialog("Error", "Table Export Error", "");
+                EditorUtility.DisplayDialog("Error", "Table Export Error", "OK");
                 return;
             }
 
             if (await TableMaker.MakeGSTR(PathData.TablePath, PathData.GSTROutput) == false)
             {
-                EditorUtility.DisplayDialog("Error", "GSTR Export Error", "");
+                EditorUtility.DisplayDialog("Error", "GSTR Export Error", "OK");
                 return;
             }
 
             if (await TableMaker.MakeScript(PathData.TablePath, PathData.ScriptOutput) == false)
             {
-                EditorUtility.DisplayDialog("Error", "Script Export Error", "");
+                EditorUtility.DisplayDialog("Error", "Script Export Error", "OK");
                 return;
             }
 
-            EditorUtility.DisplayDialog("", "Done", "");
+            EditorUtility.DisplayDialog("Success", "Done", "OK");
         }
 
         private async void OnClick_ScriptExport()
         {
             if (PathData == null)
             {
-                EditorUtility.DisplayDialog("Error", "Path Invalid", "");
+                EditorUtility.DisplayDialog("Error", "Path Invalid", "OK");
                 return;
             }
 
             if (string.IsNullOrEmpty(PathData.ScriptOutput))
             {
-                EditorUtility.DisplayDialog("Error", "Script path is empty", "");
+                EditorUtility.DisplayDialog("Error", "Script path is empty", "OK");
                 return;
             }
 
             if (await TableMaker.MakeScript(PathData.TablePath, PathData.ScriptOutput) == false)
             {
-                EditorUtility.DisplayDialog("Error", "Script Export Error", "");
+                EditorUtility.DisplayDialog("Error", "Script Export Error", "OK");
                 return;
             }
 
-            EditorUtility.DisplayDialog("", "Done", "");
+            EditorUtility.DisplayDialog("Success", "Done", "OK");
         }
 
         private async void OnClick_TableExport()
         {
             if (PathData == null)
             {
-                EditorUtility.DisplayDialog("Error", "Path Invalid", "");
+                EditorUtility.DisplayDialog("Error", "Path Invalid", "OK");
                 return;
             }
 
             if (string.IsNullOrEmpty(PathData.TableOutput))
             {
-                EditorUtility.DisplayDialog("Error", "Table path is empty", "");
+                EditorUtility.DisplayDialog("Error", "Table path is empty", "OK");
                 return;
             }
 
             if (await TableMaker.MakeTable(PathData.TablePath, PathData.TableOutput) == false)
             {
-                EditorUtility.DisplayDialog("Error", "Table Export Error", "");
+                EditorUtility.DisplayDialog("Error", "Table Export Error", "OK");
                 return;
             }
 
-            EditorUtility.DisplayDialog("", "Done", "");
+            EditorUtility.DisplayDialog("Success", "Done", "OK");
         }
 
         private async void OnClick_GSTRExport()
         {
             if (PathData == null)
             {
-                EditorUtility.DisplayDialog("Error", "Path Invalid", "");
+                EditorUtility.DisplayDialog("Error", "Path Invalid", "OK");
                 return;
             }
 
             if (string.IsNullOrEmpty(PathData.GSTROutput))
             {
-                EditorUtility.DisplayDialog("Error", "GSTR path is empty", "");
+                EditorUtility.DisplayDialog("Error", "GSTR path is empty", "OK");
                 return;
             }
 
             if (await TableMaker.MakeGSTR(PathData.TablePath, PathData.GSTROutput) == false)
             {
-                EditorUtility.DisplayDialog("Error", "GSTR Export Error", "");
+                EditorUtility.DisplayDialog("Error", "GSTR Export Error", "OK");
                 return;
             }
 
-            EditorUtility.DisplayDialog("", "Done", "");
+            EditorUtility.DisplayDialog("Success", "Done", "OK");
         }
 
         private void OnGUI()
@@ -230,6 +232,26 @@ namespace MyTurn.ExcelParser
                     SaveWindow();
             }
             EditorGUILayout.EndHorizontal();
+
+            // 암호화
+            EditorGUILayout.BeginHorizontal();
+            EditorGUILayout.LabelField("Secure Mode", EditorStyles.label, LabelOption);
+            PathData.IsSecure = EditorGUILayout.Toggle(PathData.IsSecure, EditorStyles.toggle, TextOption);
+            EditorGUILayout.EndHorizontal();
+
+            if (PathData.IsSecure)
+            {
+                EditorGUILayout.BeginHorizontal();
+                EditorGUILayout.LabelField("Secure Key", EditorStyles.label, LabelOption);
+                PathData.SecureKey = EditorGUILayout.TextArea(PathData.SecureKey, EditorStyles.textArea, TextOption);
+                if (GUILayout.Button("Save", OtherOption))
+                {
+                    SaveWindow();
+                }
+                EditorGUILayout.EndHorizontal();
+            }
+
+            EditorGUILayout.Space();
 
             // 버튼
             EditorGUILayout.BeginHorizontal();
