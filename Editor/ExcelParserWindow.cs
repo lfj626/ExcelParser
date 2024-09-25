@@ -48,6 +48,11 @@ namespace MyTurn.ExcelParser
             Window.LoadWindow();
         }
 
+        private void OnEnable()
+        {
+            LoadWindow();
+        }
+
         private void LoadWindow()
         {
             if (PathData == null)
@@ -236,7 +241,12 @@ namespace MyTurn.ExcelParser
             // ¾ÏÈ£È­
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.LabelField("Secure Mode", EditorStyles.label, LabelOption);
-            PathData.IsSecure = EditorGUILayout.Toggle(PathData.IsSecure, EditorStyles.toggle, TextOption);
+            bool IsSecure = EditorGUILayout.Toggle(PathData.IsSecure, EditorStyles.toggle, TextOption);
+            if (PathData.IsSecure != IsSecure)
+            {
+                PathData.IsSecure = IsSecure;
+                SaveWindow();
+            }
             EditorGUILayout.EndHorizontal();
 
             if (PathData.IsSecure)

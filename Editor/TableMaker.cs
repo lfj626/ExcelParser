@@ -49,7 +49,7 @@ namespace MyTurn.ExcelParser
                             FileName = table.Rows[count][2].ToString(),
                             TableName = table.Rows[count][3].ToString(),
                             ExportName = table.Rows[count][4].ToString(),
-                            IsLocalTable = bool.Parse(table.Rows[count][5].ToString())
+                            IsLocalTable = int.Parse(table.Rows[count][5].ToString()) == 1
                         };
 
                         Infos.Add(NewInfo);
@@ -94,7 +94,7 @@ namespace MyTurn.ExcelParser
                             FileName = table.Rows[count][2].ToString(),
                             TableName = table.Rows[count][3].ToString(),
                             ExportName = table.Rows[count][4].ToString(),
-                            IsLocalTable = bool.Parse(table.Rows[count][5].ToString())
+                            IsLocalTable = int.Parse(table.Rows[count][5].ToString()) == 1
                         };
 
                         Infos.Add(NewInfo);
@@ -212,8 +212,9 @@ namespace MyTurn.ExcelParser
 
                 return true;
             }
-            catch
+            catch(Exception e)
             {
+                UnityEngine.Debug.LogError(e.Message);
                 return false;
             }
         }
@@ -261,8 +262,9 @@ namespace MyTurn.ExcelParser
 
                 return true;
             }
-            catch
+            catch(Exception e)
             {
+                UnityEngine.Debug.LogError(e.Message);
                 return false;
             }
         }
